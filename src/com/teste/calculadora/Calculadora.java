@@ -47,7 +47,7 @@ public class Calculadora extends javax.swing.JFrame {
         jBmultiplicar = new javax.swing.JButton();
         jBdividir = new javax.swing.JButton();
         jBce = new javax.swing.JButton();
-        jB11 = new javax.swing.JButton();
+        jBoff = new javax.swing.JButton();
         jB12 = new javax.swing.JButton();
         jBponto = new javax.swing.JButton();
 
@@ -209,11 +209,12 @@ public class Calculadora extends javax.swing.JFrame {
             }
         });
 
-        jB11.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jB11.setText("...");
-        jB11.addActionListener(new java.awt.event.ActionListener() {
+        jBoff.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        jBoff.setForeground(new java.awt.Color(255, 0, 0));
+        jBoff.setText("off");
+        jBoff.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jB11ActionPerformed(evt);
+                jBoffActionPerformed(evt);
             }
         });
 
@@ -257,7 +258,7 @@ public class Calculadora extends javax.swing.JFrame {
                         .addGroup(jPbotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jB8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jB5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jB11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jBoff, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPbotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPbotoesLayout.createSequentialGroup()
@@ -279,7 +280,7 @@ public class Calculadora extends javax.swing.JFrame {
             jPbotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPbotoesLayout.createSequentialGroup()
                 .addGroup(jPbotoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jB11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBoff, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jB12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jB8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -345,9 +346,10 @@ public class Calculadora extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
   
     private double numero;
-    private double num;
+    private double num1, num2;
     boolean operador = false;
     boolean ponto = false;
+    boolean igual = false;
     char oper;
     private double resultado;
     double resultadoMais, resultadoMenos, resultadoVezes, resultadoDividir;
@@ -361,6 +363,12 @@ public class Calculadora extends javax.swing.JFrame {
             jTvisor.setText("");
         } 
     }
+    
+    private void apagar() {
+       resultado = 0;
+       num1 = 0;
+    }
+    
     private void setPonto (){
         String nume = jTvisor.getText();
         if ((nume.equals("0")) || (nume.equals(".") || (nume.equals("")))){
@@ -397,59 +405,99 @@ public class Calculadora extends javax.swing.JFrame {
    private void pegaResultado(char op){
        switch(op){
            case '+':
-               somar();
-               mostraResultado(resultadoMais);
+               if(!igual){
+                 somar();
+                 mostraResultado(resultadoMais);
+                 igual = true;
+                 apagar();
+               }
                break;
            case '-':
-               diminuir();
-               mostraResultado(resultadoMenos);
+               if(!igual){
+                diminuir();
+                mostraResultado(resultadoMenos);
+                igual = true;
+                apagar();
+               }
                break;
            case '*':
-               multiplicar();
-               mostraResultado(resultadoVezes);
+               if(!igual){
+                multiplicar();
+                mostraResultado(resultadoVezes);
+                igual = true;
+                apagar();
+               }
                break;
            case '/':
-               dividir();
-               mostraResultado(resultadoDividir);
+               if(!igual){
+                dividir();
+                mostraResultado(resultadoDividir);
+                igual = true;
+                apagar();
+               }
                break;
            default:
                break;
        }
    }
    
+   private void maisMenos(){
+       
+   }
    private void somar(){
        numero = Double.parseDouble(jTvisor.getText());
-       num = numero;
-       resultado += numero;
+       num1 = numero;
+       mostraResultado(numero);
+       resultado += num1;
        resultadoMais = resultado;
-       resultado = num;
-       numero = 0;
+       mostraResultado(resultadoMais);
+       numero=0;
    }
    
    private void diminuir(){
        numero = Double.parseDouble(jTvisor.getText());
-       num = numero;
-       resultado = num - resultado;
-       resultadoMenos = (-1)*resultado;
-       resultado = num;
+       num1 = numero;
+       mostraResultado(numero);
+       if (num2 == 0) {
+            resultado = num1 - num2;
+       } else {
+           resultado = num2 - num1;
+       }
+       num2 = resultado;
+       resultadoMenos = resultado;
+       mostraResultado(resultadoMenos);
+       resultado = 0;
        numero = 0;
    }
    
    private void multiplicar(){
        numero = Double.parseDouble(jTvisor.getText());
-       num = numero;
-       resultado = num * resultado;
+       num1 = numero;
+       mostraResultado(numero);
+       resultado *= num1;
        resultadoVezes = resultado;
-       resultado = num;
+       if (resultado == 0) {
+           mostraResultado(numero);
+           resultado = num1;
+       } else {
+           mostraResultado(resultadoVezes);
+       }
        numero = 0;
+       
    }
    
    private void dividir(){
        numero = Double.parseDouble(jTvisor.getText());
-       num = numero;
-       resultado /= num;
+       num1 = numero;
+       mostraResultado(numero);
+       resultado /= num1;
        resultadoDividir = resultado;
-       resultado = num;
+       if (resultado == 0){
+            mostraResultado(numero);
+            resultado = num1;
+       } else{
+          mostraResultado(resultadoDividir);
+       }
        numero = 0;
    }
     
@@ -528,12 +576,16 @@ public class Calculadora extends javax.swing.JFrame {
       somar();
       operador = true;
       oper = '+';
+      igual = false;
+      ponto = false;
         
     }//GEN-LAST:event_jBmaisActionPerformed
 
     private void jBigualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBigualActionPerformed
         // TODO add your handling code here:
+        
         pegaResultado(oper);  
+        
     }//GEN-LAST:event_jBigualActionPerformed
 
     private void jBmenusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBmenusActionPerformed
@@ -542,6 +594,7 @@ public class Calculadora extends javax.swing.JFrame {
         operador = true;
         oper = '-';
         ponto = false;
+        igual = false;
     }//GEN-LAST:event_jBmenusActionPerformed
 
     private void jBmultiplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBmultiplicarActionPerformed
@@ -550,6 +603,7 @@ public class Calculadora extends javax.swing.JFrame {
         operador = true;
         oper = '*';
         ponto = false;
+        igual = false;
     }//GEN-LAST:event_jBmultiplicarActionPerformed
 
     private void jBdividirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBdividirActionPerformed
@@ -558,6 +612,7 @@ public class Calculadora extends javax.swing.JFrame {
         operador = true;
         oper = '/';
         ponto = false;
+        igual = false;
     }//GEN-LAST:event_jBdividirActionPerformed
 
     private void jBceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBceActionPerformed
@@ -568,9 +623,11 @@ public class Calculadora extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jBceActionPerformed
 
-    private void jB11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB11ActionPerformed
+    private void jBoffActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBoffActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jB11ActionPerformed
+        apagar();
+        jTvisor.setText(null);
+    }//GEN-LAST:event_jBoffActionPerformed
 
     private void jB12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB12ActionPerformed
         // TODO add your handling code here:
@@ -622,7 +679,6 @@ public class Calculadora extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jB0;
     private javax.swing.JButton jB1;
-    private javax.swing.JButton jB11;
     private javax.swing.JButton jB12;
     private javax.swing.JButton jB2;
     private javax.swing.JButton jB3;
@@ -638,6 +694,7 @@ public class Calculadora extends javax.swing.JFrame {
     private javax.swing.JButton jBmais;
     private javax.swing.JButton jBmenus;
     private javax.swing.JButton jBmultiplicar;
+    private javax.swing.JButton jBoff;
     private javax.swing.JButton jBponto;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPbotoes;
@@ -647,5 +704,7 @@ public class Calculadora extends javax.swing.JFrame {
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagem/icone16.png")));
     }
+
+  
     
 }

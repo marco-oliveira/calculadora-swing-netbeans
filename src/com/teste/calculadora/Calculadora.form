@@ -125,7 +125,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jB8" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
                               <Component id="jB5" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
-                              <Component id="jB11" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="jBoff" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -157,7 +157,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jB11" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                      <Component id="jBoff" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                       <Component id="jB12" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -391,15 +391,18 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBceActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jB11">
+        <Component class="javax.swing.JButton" name="jBoff">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="11" style="1"/>
+              <Font name="Tahoma" size="10" style="0"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="..."/>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="0" green="0" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="off"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jB11ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBoffActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jB12">
