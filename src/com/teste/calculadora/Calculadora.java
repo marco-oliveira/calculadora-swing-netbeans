@@ -352,8 +352,8 @@ public class Calculadora extends javax.swing.JFrame {
     boolean igual = false;
     char oper;
     private double resultado;
-    double resultadoMais, resultadoMenos, resultadoVezes, resultadoDividir;
-    
+    double resultadoMais, resultadoVezes, resultadoDividir;
+    double resultadoMenos = 1;
     public Calculadora(GraphicsConfiguration gc) {
         super(gc);
     }
@@ -458,15 +458,13 @@ public class Calculadora extends javax.swing.JFrame {
        numero = Double.parseDouble(jTvisor.getText());
        num1 = numero;
        mostraResultado(numero);
-       if (num2 == 0) {
-            resultado = num1 - num2;
+       if ((resultado == 0)&&(resultadoMenos == 1)) {
+              resultado = num1 - resultado;
        } else {
-           resultado = num2 - num1;
+           resultado -= num1;
        }
-       num2 = resultado;
        resultadoMenos = resultado;
        mostraResultado(resultadoMenos);
-       resultado = 0;
        numero = 0;
    }
    
